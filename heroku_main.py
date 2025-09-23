@@ -43,7 +43,9 @@ async def start_bot():
         
         # Keep running
         try:
-            await app.updater.idle()
+            # Wait indefinitely
+            while True:
+                await asyncio.sleep(1)
         except KeyboardInterrupt:
             logger.info("Bot stopped by user")
         finally:
