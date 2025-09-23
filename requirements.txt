@@ -1,0 +1,39 @@
+# Telegram Bot Requirements
+# Core dependencies for the modular Telegram bot
+
+# Telegram Bot API
+python-telegram-bot==20.7
+
+# Environment variables management
+python-dotenv==1.0.0
+
+# Database
+# sqlite3  # Built-in with Python
+
+# Date and time handling
+python-dateutil==2.8.2
+
+# Logging and monitoring
+loguru==0.7.2
+
+# HTTP requests (for timezone API integration)
+requests==2.31.0
+
+# System monitoring
+psutil==5.9.6
+
+# JSON handling (built-in with Python)
+# uuid (built-in with Python)
+# asyncio (built-in with Python)
+
+# Development dependencies
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+black==23.9.1
+flake8==6.1.0
+mypy==1.6.1
+
+# Production dependencies (optional)
+# gunicorn==21.2.0
+# supervisor==4.2.5

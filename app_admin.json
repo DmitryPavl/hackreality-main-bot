@@ -1,9 +1,9 @@
 {
-  "name": "HackReality Bot",
-  "description": "Telegram bot for goal achievement and personal development",
+  "name": "HackReality Admin Bot",
+  "description": "Admin bot for HackReality - monitoring and management",
   "repository": "https://github.com/yourusername/hackreality-bot",
-  "logo": "https://via.placeholder.com/300x300/4CAF50/FFFFFF?text=HackReality",
-  "keywords": ["telegram", "bot", "python", "goal-achievement", "psychology"],
+  "logo": "https://via.placeholder.com/300x300/2196F3/FFFFFF?text=Admin",
+  "keywords": ["telegram", "bot", "python", "admin", "monitoring"],
   "env": {
     "TELEGRAM_BOT_TOKEN": {
       "description": "Your main Telegram bot token",
@@ -24,7 +24,7 @@
   },
   "formation": {
     "worker": {
-      "quantity": 2,
+      "quantity": 1,
       "size": "eco"
     }
   },

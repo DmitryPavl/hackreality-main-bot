@@ -1,97 +1,214 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🤖 HackReality Telegram Bot
 
-# Getting Started
+A comprehensive Telegram bot for goal achievement and personal development, featuring psychological practices and structured coaching.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 🎯 Features
 
-## Step 1: Start Metro
+- **Complete User Onboarding** - Welcome message, disclaimer, age collection, timezone detection
+- **Goal-Oriented Subscriptions** - Three plans: Extreme, 2-week, and Regular
+- **Payment Processing** - T-Bank donation system with admin confirmation
+- **Personalized Setup** - Emotional state collection and focus statement creation
+- **Task-Based Iterations** - Structured task delivery and progress tracking
+- **Admin Management** - Comprehensive admin bot for monitoring and statistics
+- **Real-time Notifications** - Admin notifications for all user activities
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 📋 Plans Available
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### 🚀 Extreme Plan
+- **Duration:** 1 week
+- **Frequency:** 6 times per day (every 2-3 hours)
+- **Focus:** Quick, intensive goal achievement
+- **Price:** Donation-based
 
-```sh
-# Using npm
-npm start
+### 📅 2-Week Plan
+- **Duration:** 2 weeks
+- **Frequency:** 1 time per day
+- **Focus:** Steady, sustainable progress
+- **Price:** Donation-based
 
-# OR using Yarn
-yarn start
+### 🎯 Regular Plan
+- **Duration:** 30 days
+- **Frequency:** 1 time per day
+- **Focus:** Detailed, comprehensive development
+- **Status:** In development
+
+## 🏗️ Architecture
+
+### Main Bot (@HackRealityBot)
+- User-facing functionality
+- Complete onboarding flow
+- Goal collection and plan selection
+- Payment processing
+- Setup and material creation
+- Task delivery and iteration
+
+### Admin Bot (@hackrealityadminbot)
+- Admin commands and monitoring
+- User statistics and health checks
+- Security and performance monitoring
+- Comprehensive analytics
+- Real-time notifications
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.9+
+- Telegram Bot Token
+- Admin Bot Token
+
+### Installation
+```bash
+git clone https://github.com/yourusername/hackreality-bot.git
+cd hackreality-bot
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+### Configuration
+```bash
+cp .env.example .env
+nano .env
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+Add your bot tokens:
+```env
+TELEGRAM_BOT_TOKEN=your_main_bot_token
+ADMIN_BOT_TOKEN=your_admin_bot_token
+ADMIN_USER_ID=your_telegram_id
+ADMIN_TELEGRAM_ID=your_telegram_id
 ```
 
-Then, and every time you update your native dependencies, run:
+### Run Locally
+```bash
+# Start main bot
+python main.py
 
-```sh
-bundle exec pod install
+# Start admin bot (separate terminal)
+python admin_bot_complete.py
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## 🌐 Deployment
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+### Heroku (Recommended)
+```bash
+# Deploy to Heroku
+./deploy_heroku.sh
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### AWS EC2
+```bash
+# Deploy to AWS EC2
+./deploy_aws.sh SERVER_IP KEY_FILE.pem
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### Docker
+```bash
+# Deploy with Docker
+docker-compose -f docker-compose.production.yml up -d
+```
 
-## Step 3: Modify your app
+## 📊 Monitoring
 
-Now that you have successfully run the app, let's make changes!
+### Admin Commands
+- `/admin_stats` - Bot statistics
+- `/admin_health` - System health
+- `/admin_security` - Security report
+- `/admin_performance` - Performance metrics
+- `/admin_analytics` - User analytics
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+### Real-time Notifications
+- New user registrations
+- Regular plan requests
+- Donation confirmations
+- Setup completions
+- System errors
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## 🔧 Modules
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### Core Modules
+- `main.py` - Main bot application
+- `admin_bot_complete.py` - Admin bot application
+- `database.py` - Database management
+- `user_state.py` - User state management
 
-## Congratulations! :tada:
+### Feature Modules
+- `onboarding.py` - User onboarding flow
+- `option.py` - Plan selection and goal collection
+- `paying.py` - Payment processing
+- `settingup.py` - Setup and material creation
+- `iteration.py` - Task delivery and progress tracking
 
-You've successfully run and modified your React Native App. :partying_face:
+### Utility Modules
+- `admin_notifications.py` - Admin notification service
+- `monitoring.py` - System monitoring
+- `security.py` - Security management
+- `performance.py` - Performance optimization
+- `analytics.py` - User analytics
+- `error_handler.py` - Error handling
 
-### Now what?
+## 🧪 Testing
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+```bash
+# Run tests
+python run_tests.py
 
-# Troubleshooting
+# Run with coverage
+pytest --cov=modules tests/
+```
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+## 📈 Analytics
 
-# Learn More
+The bot tracks:
+- User engagement metrics
+- Conversion funnels
+- Feature usage statistics
+- Goal achievement rates
+- Admin notification effectiveness
 
-To learn more about React Native, take a look at the following resources:
+## 🔒 Security
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Rate limiting
+- Content validation
+- User blocking capabilities
+- Suspicious activity detection
+- Input sanitization
+
+## 💰 Cost
+
+### Development
+- **Free** - Run locally
+
+### Production
+- **Heroku:** $5-10/month
+- **AWS EC2:** Free tier (12 months) or $5/month
+- **Other VPS:** $5-10/month
+
+## 📱 Bot Usernames
+
+- **Main Bot:** @HackRealityBot
+- **Admin Bot:** @hackrealityadminbot
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🆘 Support
+
+For support, contact the admin through @hackrealityadminbot or create an issue in the repository.
+
+## 🎉 Acknowledgments
+
+Built with ❤️ for helping people achieve their goals and overcome challenges through structured psychological practices.
+
+---
+
+**Ready to help people achieve their dreams! 🌟**

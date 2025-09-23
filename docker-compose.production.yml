@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  main-bot:
+    build: .
+    container_name: hackreality-main-bot
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - ADMIN_BOT_TOKEN=${ADMIN_BOT_TOKEN}
+      - ADMIN_USER_ID=${ADMIN_USER_ID}
+      - ADMIN_TELEGRAM_ID=${ADMIN_TELEGRAM_ID}
+    command: python main.py
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    networks:
+      - bot-network
+
+  admin-bot:
+    build: .
+    container_name: hackreality-admin-bot
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - ADMIN_BOT_TOKEN=${ADMIN_BOT_TOKEN}
+      - ADMIN_USER_ID=${ADMIN_USER_ID}
+      - ADMIN_TELEGRAM_ID=${ADMIN_TELEGRAM_ID}
+    command: python admin_bot_complete.py
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    networks:
+      - bot-network
+
+  # Optional: Add monitoring
+  monitoring:
+    image: grafana/grafana:latest
+    container_name: hackreality-monitoring
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - bot-network
+
+networks:
+  bot-network:
+    driver: bridge
+
+volumes:
+  grafana-storage:
