@@ -28,6 +28,13 @@ class OnboardingModule:
         ]
         self.current_step = 0
     
+    async def _send_message(self, update, context, text, reply_markup=None, parse_mode='Markdown'):
+        """Helper method to send messages in both message and callback query contexts"""
+        if update.message:
+            await update.message.reply_text(text, parse_mode=parse_mode, reply_markup=reply_markup)
+        else:
+            await update.callback_query.edit_message_text(text, parse_mode=parse_mode, reply_markup=reply_markup)
+    
     async def start_onboarding(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Start the onboarding process"""
         user_id = update.effective_user.id
@@ -142,7 +149,7 @@ class OnboardingModule:
         keyboard = [[InlineKeyboardButton("Да, готов! 🎯", callback_data="continue_onboarding")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        await update.message.reply_text(purpose_text, parse_mode='Markdown', reply_markup=reply_markup)
+        await self._send_message(update, context, purpose_text, reply_markup)
     
     async def _show_disclaimer(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Show important disclaimer about psychological practice"""
@@ -179,7 +186,7 @@ class OnboardingModule:
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        await update.message.reply_text(disclaimer_text, parse_mode='Markdown', reply_markup=reply_markup)
+        await self._send_message(update, context, disclaimer_text, reply_markup)
     
     async def _collect_user_age(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Collect user's age"""
