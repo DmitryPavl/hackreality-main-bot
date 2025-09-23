@@ -961,7 +961,20 @@ Ready to see what plan works best for you? 🎯
         await query.answer()
         
         if query.data == "continue_onboarding":
-            await self.handle_message(update, context)
+            # Advance to next step
+            user_id = update.effective_user.id
+            state_data = await self.db_manager.get_user_state_data(user_id)
+            current_step = state_data.get("onboarding_step", 0)
+            
+            # Update to next step
+            await self.db_manager.update_user_state_data(user_id, {"onboarding_step": current_step + 1})
+            
+            # Call next step
+            if current_step + 1 < len(self.onboarding_steps):
+                await self.onboarding_steps[current_step + 1](update, context)
+            else:
+                # Onboarding complete
+                await self._complete_onboarding(update, context)
         elif query.data == "start_option_selection":
             await self._complete_onboarding(update, context)
         elif query.data == "ask_questions":
