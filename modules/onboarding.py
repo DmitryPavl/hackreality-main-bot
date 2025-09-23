@@ -39,7 +39,7 @@ class OnboardingModule:
         full_name = f"{first_name} {last_name}".strip()
         
         # Initialize user data with default language
-        await self.db_manager.update_user_state_data(user_id, {
+        state_data = {
             "onboarding_step": 0,
             "language": "ru",
             "user_name": full_name,
@@ -47,7 +47,10 @@ class OnboardingModule:
             "city": None,
             "timezone": None,
             "messaging_confirmed": False
-        })
+        }
+        
+        # Set user state to onboarding
+        await self.db_manager.set_user_state(user_id, "onboarding", state_data)
         
         # Start with welcome message
         await self._welcome_message(update, context)
