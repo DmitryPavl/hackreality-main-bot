@@ -6,6 +6,8 @@ Heroku-compatible main bot launcher
 import os
 import sys
 import logging
+import asyncio
+from telegram.ext import Application
 
 # Add current directory to Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -30,5 +32,10 @@ async def main():
         raise
 
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logger.info("Bot stopped by user")
+    except Exception as e:
+        logger.error(f"Bot crashed: {e}")
+        sys.exit(1)
