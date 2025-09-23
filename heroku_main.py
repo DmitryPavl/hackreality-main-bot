@@ -19,15 +19,16 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def main():
+async def main():
     """Main function for Heroku deployment"""
     try:
         logger.info("Starting HackReality Bot on Heroku...")
         bot = TelegramBot()
-        bot.run()
+        await bot.run()
     except Exception as e:
         logger.error(f"Failed to start bot: {e}")
         raise
 
 if __name__ == "__main__":
-    main()
+    import asyncio
+    asyncio.run(main())
