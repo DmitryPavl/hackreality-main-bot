@@ -1,8 +1,9 @@
 # Environment Variables for Telegram Bot
 # Copy this file to .env and fill in your actual values
 
-# Telegram Bot Configuration
-TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+# Main Bot Configuration (for user-facing bot)
+TELEGRAM_BOT_TOKEN=your_main_telegram_bot_token_here
+ADMIN_BOT_TOKEN=your_admin_telegram_bot_token_here
 
 # Database Configuration
 DATABASE_PATH=bot_database.db
@@ -11,20 +12,15 @@ DATABASE_PATH=bot_database.db
 LOG_LEVEL=INFO
 LOG_FILE=bot.log
 
+# Admin Bot Configuration (for admin-facing bot)
+# ADMIN_USER_ID=your_admin_user_id_here
+# ADMIN_TELEGRAM_ID=your_admin_telegram_chat_id_here
+
 # Optional: External API Keys (if needed for future integrations)
 # STRIPE_API_KEY=your_stripe_api_key_here
 # PAYPAL_CLIENT_ID=your_paypal_client_id_here
 # OPENAI_API_KEY=your_openai_api_key_here
 # OPENWEATHER_API_KEY=your_openweather_api_key_here
-
-# Bot Configuration
-BOT_NAME=YourBotName
-BOT_DESCRIPTION=Your bot description here
-ADMIN_USER_ID=your_admin_user_id_here
-
-# Admin Notifications (for @dapavl)
-# Get your Telegram chat ID by messaging @userinfobot
-ADMIN_TELEGRAM_ID=your_admin_telegram_chat_id_here
 
 # Content Generation Settings
 MAX_CONTENT_LENGTH=2000

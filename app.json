@@ -10,15 +10,7 @@
       "required": true
     },
     "ADMIN_BOT_TOKEN": {
-      "description": "Your admin Telegram bot token", 
-      "required": true
-    },
-    "ADMIN_USER_ID": {
-      "description": "Your Telegram user ID",
-      "required": true
-    },
-    "ADMIN_TELEGRAM_ID": {
-      "description": "Your Telegram user ID (same as ADMIN_USER_ID)",
+      "description": "Your admin Telegram bot token for notifications", 
       "required": true
     }
   },

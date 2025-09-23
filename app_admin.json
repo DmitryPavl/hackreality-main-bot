@@ -6,7 +6,7 @@
   "keywords": ["telegram", "bot", "python", "admin", "monitoring"],
   "env": {
     "TELEGRAM_BOT_TOKEN": {
-      "description": "Your main Telegram bot token",
+      "description": "Your admin Telegram bot token (same as ADMIN_BOT_TOKEN)",
       "required": true
     },
     "ADMIN_BOT_TOKEN": {
