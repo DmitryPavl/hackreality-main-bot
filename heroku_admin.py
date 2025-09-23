@@ -7,11 +7,10 @@ import os
 import sys
 import logging
 import asyncio
+from telegram.ext import Application
 
 # Add current directory to Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-from admin_bot_complete import CompleteAdminBot
 
 # Configure logging for Heroku
 logging.basicConfig(
@@ -20,21 +19,57 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-async def main():
-    """Main function for Heroku deployment"""
+async def start_admin_bot():
+    """Start the admin bot with proper event loop handling"""
     try:
         logger.info("Starting HackReality Admin Bot on Heroku...")
-        bot = CompleteAdminBot()
-        await bot.run()
+        
+        # Import here to avoid circular imports
+        from admin_bot_complete import CompleteAdminBot
+        
+        # Create bot instance
+        admin_bot = CompleteAdminBot()
+        
+        # Get the application directly
+        app = admin_bot.application
+        
+        # Start polling
+        logger.info("Starting admin bot polling...")
+        await app.initialize()
+        await app.start()
+        await app.updater.start_polling()
+        
+        logger.info("Admin bot is running and polling...")
+        
+        # Keep running
+        try:
+            await app.updater.idle()
+        except KeyboardInterrupt:
+            logger.info("Admin bot stopped by user")
+        finally:
+            await app.updater.stop()
+            await app.stop()
+            await app.shutdown()
+            
     except Exception as e:
         logger.error(f"Failed to start admin bot: {e}")
         raise
 
-if __name__ == "__main__":
+def main():
+    """Main function for Heroku deployment"""
     try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        logger.info("Admin bot stopped by user")
+        # Create new event loop
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        
+        try:
+            loop.run_until_complete(start_admin_bot())
+        finally:
+            loop.close()
+            
     except Exception as e:
         logger.error(f"Admin bot crashed: {e}")
         sys.exit(1)
+
+if __name__ == "__main__":
+    main()
