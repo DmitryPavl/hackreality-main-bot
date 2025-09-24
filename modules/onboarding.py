@@ -651,8 +651,8 @@ class OnboardingModule:
             "disclaimer_accepted_at": context.bot_data.get("current_time", "unknown")
         })
         
-        # Continue to next step
-        await self.handle_message(update, context)
+        # Continue to next step (age collection)
+        await self._collect_user_age(update, context)
     
     async def _handle_disclaimer_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle disclaimer help request"""
