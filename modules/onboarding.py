@@ -22,8 +22,7 @@ class OnboardingModule:
             self._collect_user_age,
             self._collect_city_info,
             self._confirm_timezone,
-            self._confirm_messaging,
-            self._get_ready_confirmation
+            self._complete_onboarding
         ]
         self.current_step = 0
     
@@ -346,17 +345,11 @@ class OnboardingModule:
 **Город:** {city}
 **Часовой пояс:** {timezone_name} ({timezone_offset})
 
-**Я буду отправлять тебе сообщения:**
-• Утром: 8:00 - 10:00 (по твоему времени)
-• Днем: 12:00 - 14:00 (по твоему времени)
-• Вечером: 18:00 - 20:00 (по твоему времени)
-
-Это правильный часовой пояс и удобное время для тебя? 🤔
+Это правильный часовой пояс? 🤔
         """
         
         keyboard = [
             [InlineKeyboardButton("Да, все правильно! ✅", callback_data="timezone_ok")],
-            [InlineKeyboardButton("Изменить время ⏰", callback_data="change_time")],
             [InlineKeyboardButton("Неправильный город 🌍", callback_data="wrong_city")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -507,9 +500,9 @@ class OnboardingModule:
         user_id = update.effective_user.id
         
         if any(word in response.lower() for word in ["да", "да", "отлично", "хорошо", "подходит"]):
-            # Move to messaging confirmation
-            await self.db_manager.update_user_state_data(user_id, {"onboarding_step": 5})
-            await self._confirm_messaging(update, context)
+            # Complete onboarding and move to option selection
+            await self.db_manager.update_user_state_data(user_id, {"onboarding_step": 6})
+            await self._complete_onboarding(update, context)
         else:
             # Ask for time preferences
             await self._ask_time_preferences(update, context)
@@ -875,35 +868,33 @@ Ready to see what plan works best for you? 🎯
         
         await update.message.reply_text(features_text, parse_mode='Markdown', reply_markup=reply_markup)
     
-    async def _get_ready_confirmation(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """Get confirmation that user is ready to proceed"""
+    async def _complete_onboarding(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Complete onboarding and transition to option selection"""
         user_id = update.effective_user.id
         state_data = await self.db_manager.get_user_state_data(user_id)
         user_name = state_data.get("user_name", "")
         user_age = state_data.get("user_age", "")
         city = state_data.get("city", "твой город")
-        messaging_confirmed = state_data.get("messaging_confirmed", False)
         
         # Format age display
         age_display = f"{user_age} лет" if user_age else "не указан"
         
-        ready_text = f"""
-🎊 **Отлично, {user_name}! Мы готовы начать!**
+        completion_text = f"""
+🎊 **Отлично, {user_name}! Знакомство завершено!**
 
 Теперь я знаю:
 • 👤 Твое имя: {user_name}
 • 🎂 Твой возраст: {age_display}
 • 🌍 Твой город: {city}
 • ⏰ Твой часовой пояс
-• 📱 {'Согласие на получение сообщений' if messaging_confirmed else 'Работа без автоматических сообщений'}
 
 **Что дальше?**
-1️⃣ Выбор подходящего плана
-2️⃣ Настройка твоих целей
-3️⃣ Начало работы над собой
-4️⃣ Реальное изменение твоей жизни!
+1️⃣ Выбор подходящего плана работы
+2️⃣ Определение твоих целей
+3️⃣ Настройка процесса
+4️⃣ Начало реальных изменений!
 
-Готов начать свой путь к мечте? 🚀
+Готов выбрать план и начать путь к своей мечте? 🚀
         """
         
         keyboard = [
@@ -912,7 +903,7 @@ Ready to see what plan works best for you? 🎯
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        await update.message.reply_text(ready_text, parse_mode='Markdown', reply_markup=reply_markup)
+        await self._send_message(update, context, completion_text, reply_markup=reply_markup, parse_mode='Markdown')
     
     async def _complete_onboarding(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Complete onboarding and move to option selection"""
@@ -932,7 +923,7 @@ Ready to see what plan works best for you? 🎯
 Переходим к выбору плана! 💎
         """
         
-        await update.message.reply_text(completion_text, parse_mode='Markdown')
+        await self._send_message(update, context, completion_text, parse_mode='Markdown')
         
         # Import here to avoid circular imports
         from modules.option import OptionModule
@@ -966,7 +957,10 @@ Ready to see what plan works best for you? 🎯
         elif query.data == "ask_questions":
             await self._handle_questions(update, context)
         elif query.data == "timezone_ok":
-            await self._process_timezone_confirmation(update, context, "да")
+            # Complete onboarding and move to option selection
+            user_id = update.effective_user.id
+            await self.db_manager.update_user_state_data(user_id, {"onboarding_step": 6})
+            await self._complete_onboarding(update, context)
         elif query.data == "change_time":
             await self._ask_time_preferences(update, context)
         elif query.data == "messaging_ok":

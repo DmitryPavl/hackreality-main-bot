@@ -13,7 +13,7 @@ class TestDatabaseOperations:
     async def test_database_initialization(self, temp_db):
         """Test that database initializes correctly."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         
         # Database should be initialized without errors
         assert True  # If we get here, initialization succeeded
@@ -22,7 +22,7 @@ class TestDatabaseOperations:
     async def test_user_initialization(self, temp_db, mock_user):
         """Test that user initialization works correctly."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         
         # Initialize user
         await db_manager.initialize_user(
@@ -33,7 +33,7 @@ class TestDatabaseOperations:
         )
         
         # Verify user was created
-        user_data = await db_manager.get_user_data(mock_user.id)
+        user_data = await db_manager.get_user_profile(mock_user.id)
         assert user_data is not None
         assert user_data["user_id"] == mock_user.id
         assert user_data["username"] == mock_user.username
@@ -43,7 +43,7 @@ class TestDatabaseOperations:
     async def test_user_state_management(self, temp_db, mock_user):
         """Test user state management in database."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Test setting and getting user state
@@ -64,7 +64,7 @@ class TestDatabaseOperations:
     async def test_user_state_updates(self, temp_db, mock_user):
         """Test updating user state data."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Set initial state
@@ -85,7 +85,7 @@ class TestDatabaseOperations:
     async def test_message_storage(self, temp_db, mock_user):
         """Test message storage functionality."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Store user message
@@ -104,54 +104,64 @@ class TestDatabaseOperations:
         )
         
         # Verify messages were stored
-        messages = await db_manager.get_user_messages(mock_user.id)
-        assert len(messages) == 2
-        
-        # Check message types
-        user_messages = [msg for msg in messages if msg["sender"] == "user"]
-        bot_messages = [msg for msg in messages if msg["sender"] == "bot"]
+        user_messages = await db_manager.get_user_messages(mock_user.id)
+        bot_messages = await db_manager.get_bot_messages(mock_user.id)
         
         assert len(user_messages) == 1
         assert len(bot_messages) == 1
-        assert user_messages[0]["content"] == "Hello bot!"
-        assert bot_messages[0]["content"] == "Hello user!"
+        assert user_messages[0]["message_text"] == "Hello bot!"
+        assert bot_messages[0]["message_text"] == "Hello user!"
     
     @pytest.mark.asyncio
     async def test_subscription_management(self, temp_db, mock_user):
         """Test subscription and goal management."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Create subscription
         subscription_id = await db_manager.create_subscription(
             user_id=mock_user.id,
-            goal="Test goal",
-            plan="extreme",
-            target="Test target"
+            order_id="test_order_123",
+            user_goal="Test goal",
+            subscription_type="extreme",
+            plan_details={
+                "name": "Extreme Plan",
+                "price": "1000",
+                "duration": "1 week",
+                "approach": "intensive",
+                "result_time": "1 week"
+            }
         )
         
         # Verify subscription was created
-        subscription = await db_manager.get_subscription(subscription_id)
+        assert subscription_id is True
+        subscription = await db_manager.get_subscription_by_order_id("test_order_123")
         assert subscription is not None
-        assert subscription["goal"] == "Test goal"
-        assert subscription["plan"] == "extreme"
-        assert subscription["target"] == "Test target"
-        assert subscription["status"] == "pending"
+        assert subscription["user_goal"] == "Test goal"
+        assert subscription["subscription_type"] == "extreme"
+        assert subscription["status"] == "pending_payment"
     
     @pytest.mark.asyncio
     async def test_focus_statements_management(self, temp_db, mock_user):
         """Test focus statements management."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Create subscription first
         subscription_id = await db_manager.create_subscription(
             user_id=mock_user.id,
-            goal="Test goal",
-            plan="extreme",
-            target="Test target"
+            order_id="test_order_123",
+            user_goal="Test goal",
+            subscription_type="extreme",
+            plan_details={
+                "name": "Extreme Plan",
+                "price": "1000",
+                "duration": "1 week",
+                "approach": "intensive",
+                "result_time": "1 week"
+            }
         )
         
         # Add focus statements
@@ -176,15 +186,22 @@ class TestDatabaseOperations:
     async def test_task_management(self, temp_db, mock_user):
         """Test task management functionality."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Create subscription and focus statement
         subscription_id = await db_manager.create_subscription(
             user_id=mock_user.id,
-            goal="Test goal",
-            plan="extreme",
-            target="Test target"
+            order_id="test_order_123",
+            user_goal="Test goal",
+            subscription_type="extreme",
+            plan_details={
+                "name": "Extreme Plan",
+                "price": "1000",
+                "duration": "1 week",
+                "approach": "intensive",
+                "result_time": "1 week"
+            }
         )
         
         focus_statement_id = await db_manager.add_focus_statement(
@@ -215,15 +232,22 @@ class TestDatabaseOperations:
     async def test_active_task_management(self, temp_db, mock_user):
         """Test active task management."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Create subscription, focus statement, and task
         subscription_id = await db_manager.create_subscription(
             user_id=mock_user.id,
-            goal="Test goal",
-            plan="extreme",
-            target="Test target"
+            order_id="test_order_123",
+            user_goal="Test goal",
+            subscription_type="extreme",
+            plan_details={
+                "name": "Extreme Plan",
+                "price": "1000",
+                "duration": "1 week",
+                "approach": "intensive",
+                "result_time": "1 week"
+            }
         )
         
         focus_statement_id = await db_manager.add_focus_statement(
@@ -252,7 +276,7 @@ class TestDatabaseOperations:
     async def test_database_concurrent_access(self, temp_db, mock_user):
         """Test database handles concurrent access correctly."""
         db_manager = DatabaseManager(temp_db)
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Simulate concurrent operations

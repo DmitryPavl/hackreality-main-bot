@@ -19,7 +19,7 @@ class TestStateManagementConsistency:
         db_manager = DatabaseManager(temp_db)
         
         # Initialize database
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Set state using state_manager
@@ -48,7 +48,7 @@ class TestStateManagementConsistency:
         state_manager = UserStateManager()
         db_manager = DatabaseManager(temp_db)
         
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Set initial state
@@ -74,7 +74,7 @@ class TestStateManagementConsistency:
         state_manager = UserStateManager()
         db_manager = DatabaseManager(temp_db)
         
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Simulate concurrent state updates
@@ -100,7 +100,7 @@ class TestStateManagementConsistency:
         state_manager = UserStateManager()
         db_manager = DatabaseManager(temp_db)
         
-        await db_manager.initialize_database()
+        db_manager.init_database()
         
         # Test getting state for non-existent user
         state = await state_manager.get_user_state(99999)
@@ -115,7 +115,7 @@ class TestStateManagementConsistency:
         state_manager = UserStateManager()
         db_manager = DatabaseManager(temp_db)
         
-        await db_manager.initialize_database()
+        db_manager.init_database()
         await db_manager.initialize_user(mock_user.id, mock_user.username, mock_user.first_name)
         
         # Test valid state transitions

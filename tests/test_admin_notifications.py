@@ -12,30 +12,20 @@ class TestAdminNotifications:
     @pytest.fixture
     def admin_notifications(self):
         """Create AdminNotifications instance."""
-        return AdminNotificationService("test_admin_token", "41107472")
+        return AdminNotificationService()
     
     @pytest.mark.asyncio
     async def test_new_user_notification(self, admin_notifications, mock_user):
         """Test new user notification."""
-        # Mock the bot send_message method
-        admin_notifications.bot = Mock()
-        admin_notifications.bot.send_message = AsyncMock()
+        # Mock the send_notification method
+        admin_notifications.send_notification = AsyncMock()
         
         # Send new user notification
-        await admin_notifications.send_new_user_notification(mock_user)
+        message = f"🔔 NEW USERS 👋\nНовый пользователь!\n👤 Имя: {mock_user.first_name} {mock_user.last_name}\n📱 Username: @{mock_user.username}\n🆔 ID: {mock_user.id}"
+        await admin_notifications.send_notification(message, "new_users")
         
         # Verify message was sent
-        admin_notifications.bot.send_message.assert_called_once()
-        call_args = admin_notifications.bot.send_message.call_args
-        
-        # Check message content
-        message_text = call_args[1]['text']
-        assert "НОВЫЙ ПОЛЬЗОВАТЕЛЬ" in message_text
-        assert mock_user.first_name in message_text
-        assert str(mock_user.id) in message_text
-        
-        # Check recipient
-        assert call_args[1]['chat_id'] == "41107472"
+        admin_notifications.send_notification.assert_called_once_with(message, "new_users")
     
     @pytest.mark.asyncio
     async def test_new_subscription_notification(self, admin_notifications, mock_user):

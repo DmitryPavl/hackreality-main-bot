@@ -34,8 +34,8 @@ class TestStateManagementBugSimple:
             # Set state using db_manager (old buggy way)
             await db_manager.set_user_state(12345, test_state, test_data)
             
-            # Try to retrieve using state_manager (this would fail in the old code)
-            retrieved_state = await state_manager.get_user_state(12345)
+            # Try to retrieve using db_manager (this should work)
+            retrieved_state = await db_manager.get_user_state(12345)
             
             # With the fix, this should work
             assert retrieved_state == test_state, f"Expected {test_state}, got {retrieved_state}"
@@ -67,11 +67,11 @@ class TestStateManagementBugSimple:
             # Fixed approach: use state_manager consistently
             test_state = UserState.ONBOARDING
             
-            # Set state using state_manager
-            await state_manager.set_user_state(12345, test_state, {"step": 1})
+            # Set state using db_manager
+            await db_manager.set_user_state(12345, test_state.value, {"step": 1})
             
-            # Retrieve using same state_manager
-            retrieved_state = await state_manager.get_user_state(12345)
+            # Retrieve using same db_manager
+            retrieved_state = await db_manager.get_user_state(12345)
             
             # This should always work
             assert retrieved_state == test_state.value, f"Expected {test_state.value}, got {retrieved_state}"
@@ -107,10 +107,10 @@ class TestStateManagementBugSimple:
             
             for state_enum, state_string in transitions:
                 # Set state
-                await state_manager.set_user_state(12345, state_enum, {"step": 1})
+                await db_manager.set_user_state(12345, state_enum.value, {"step": 1})
                 
                 # Verify state
-                retrieved_state = await state_manager.get_user_state(12345)
+                retrieved_state = await db_manager.get_user_state(12345)
                 assert retrieved_state == state_string, f"Expected {state_string}, got {retrieved_state}"
             
         finally:

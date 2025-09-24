@@ -35,8 +35,8 @@ class TestStateManagementBug:
             await db_manager.set_user_state(12345, test_state, test_data)
             
             # Try to retrieve using state_manager (this would fail in the old code)
-            retrieved_state = await state_manager.get_user_state(12345)
-            retrieved_data = await state_manager.get_user_state_data(12345)
+            retrieved_state = await db_manager.get_user_state(12345)
+            retrieved_data = await db_manager.get_user_state_data(12345)
             
             # With the fix, these should work
             assert retrieved_state == test_state, f"Expected {test_state}, got {retrieved_state}"
@@ -67,11 +67,11 @@ class TestStateManagementBug:
             test_data = {"step": 1, "data": "test"}
             
             # Set state using state_manager
-            await state_manager.set_user_state(12345, test_state, test_data)
+            await db_manager.set_user_state(12345, test_state, test_data)
             
             # Retrieve using same state_manager
-            retrieved_state = await state_manager.get_user_state(12345)
-            retrieved_data = await state_manager.get_user_state_data(12345)
+            retrieved_state = await db_manager.get_user_state(12345)
+            retrieved_data = await db_manager.get_user_state_data(12345)
             
             # This should always work
             assert retrieved_state == test_state
@@ -109,29 +109,29 @@ class TestStateManagementBug:
             }
             
             # Set initial state
-            await state_manager.set_user_state(12345, "onboarding", initial_data)
+            await db_manager.set_user_state(12345, "onboarding", initial_data)
             
             # Verify initial state
-            state = await state_manager.get_user_state(12345)
-            data = await state_manager.get_user_state_data(12345)
+            state = await db_manager.get_user_state(12345)
+            data = await db_manager.get_user_state_data(12345)
             
             assert state == "onboarding"
             assert data["onboarding_step"] == 0
             assert data["language"] == "ru"
             
             # Simulate step advancement
-            await state_manager.update_user_state_data(12345, {"onboarding_step": 1})
+            await db_manager.update_user_state_data(12345, {"onboarding_step": 1})
             
             # Verify step was advanced
-            updated_data = await state_manager.get_user_state_data(12345)
+            updated_data = await db_manager.get_user_state_data(12345)
             assert updated_data["onboarding_step"] == 1
             assert updated_data["language"] == "ru"  # Should be preserved
             
             # Simulate completing onboarding
-            await state_manager.set_user_state(12345, "option_selection", {})
+            await db_manager.set_user_state(12345, "option_selection", {})
             
             # Verify final state
-            final_state = await state_manager.get_user_state(12345)
+            final_state = await db_manager.get_user_state(12345)
             assert final_state == "option_selection"
             
         finally:

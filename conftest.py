@@ -73,18 +73,24 @@ def mock_callback_query(mock_user, mock_chat):
 @pytest.fixture
 def mock_update(mock_message):
     """Create a mock Telegram update with message."""
-    update = Update(update_id=1)
-    update.message = mock_message
-    update.callback_query = None
-    return update
+    with patch('telegram.Update') as mock_update_class:
+        mock_update = mock_update_class.return_value
+        mock_update.update_id = 1
+        mock_update.message = mock_message
+        mock_update.callback_query = None
+        mock_update.effective_user = mock_message.from_user
+        return mock_update
 
 @pytest.fixture
 def mock_update_callback(mock_callback_query):
     """Create a mock Telegram update with callback query."""
-    update = Update(update_id=1)
-    update.message = None
-    update.callback_query = mock_callback_query
-    return update
+    with patch('telegram.Update') as mock_update_class:
+        mock_update = mock_update_class.return_value
+        mock_update.update_id = 1
+        mock_update.message = None
+        mock_update.callback_query = mock_callback_query
+        mock_update.effective_user = mock_callback_query.from_user
+        return mock_update
 
 @pytest.fixture
 def mock_context():
