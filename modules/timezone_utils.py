@@ -4,7 +4,8 @@ Provides timezone management functionality for the bot.
 """
 
 import logging
-import requests
+import httpx
+import asyncio
 from typing import Dict, Any, Optional
 from datetime import datetime, timedelta
 import pytz
@@ -37,9 +38,9 @@ class TimezoneManager:
             return None
     
     async def _fetch_timezone_from_api(self, city_name: str) -> Optional[Dict[str, Any]]:
-        """Fetch timezone information from WorldTimeAPI"""
+        """Fetch timezone information with robust fallback"""
         try:
-            # Simple mapping for common cities (fallback)
+            # Simple mapping for common cities (primary method - no API needed)
             city_timezone_mapping = {
                 "москва": "Europe/Moscow",
                 "санкт-петербург": "Europe/Moscow",
@@ -75,21 +76,19 @@ class TimezoneManager:
             city_lower = city_name.lower().strip()
             timezone_name = city_timezone_mapping.get(city_lower, "Europe/Moscow")
             
-            # Get timezone details from WorldTimeAPI
-            timezone_details_url = f"http://worldtimeapi.org/api/timezone/{timezone_name}"
-            response = requests.get(timezone_details_url, timeout=10)
+            logger.info(f"Using timezone {timezone_name} for city {city_name}")
             
-            if response.status_code == 200:
-                timezone_data = response.json()
-                
-                return {
-                    "timezone": timezone_name,
-                    "offset": timezone_data.get("utc_offset", "+03:00"),
-                    "name": self._get_timezone_display_name(timezone_name),
-                    "city": city_name,
-                    "abbreviation": timezone_data.get("abbreviation", "MSK")
-                }
+            # Return timezone info directly from mapping (no API call needed)
+            return {
+                "timezone": timezone_name,
+                "offset": self._get_timezone_offset(timezone_name),
+                "name": self._get_timezone_display_name(timezone_name),
+                "city": city_name,
+                "abbreviation": self._get_timezone_abbreviation(timezone_name)
+            }
             
+        except Exception as e:
+            logger.error(f"Error processing timezone data: {e}")
             # Fallback to default
             return {
                 "timezone": "Europe/Moscow",
@@ -98,10 +97,6 @@ class TimezoneManager:
                 "city": city_name,
                 "abbreviation": "MSK"
             }
-            
-        except Exception as e:
-            logger.error(f"Error fetching timezone data: {e}")
-            return None
     
     def _get_timezone_display_name(self, timezone_name: str) -> str:
         """Get display name for timezone"""
@@ -124,6 +119,50 @@ class TimezoneManager:
         }
         
         return timezone_names.get(timezone_name, timezone_name)
+    
+    def _get_timezone_offset(self, timezone_name: str) -> str:
+        """Get UTC offset for timezone"""
+        timezone_offsets = {
+            "Europe/Moscow": "+03:00",
+            "Asia/Yekaterinburg": "+05:00",
+            "Asia/Novosibirsk": "+07:00",
+            "Asia/Krasnoyarsk": "+07:00",
+            "Asia/Irkutsk": "+08:00",
+            "Asia/Vladivostok": "+10:00",
+            "Europe/Samara": "+04:00",
+            "Asia/Omsk": "+06:00",
+            "America/New_York": "-05:00",
+            "Europe/London": "+00:00",
+            "Europe/Paris": "+01:00",
+            "Europe/Berlin": "+01:00",
+            "Asia/Tokyo": "+09:00",
+            "Asia/Shanghai": "+08:00",
+            "Australia/Sydney": "+10:00"
+        }
+        
+        return timezone_offsets.get(timezone_name, "+03:00")
+    
+    def _get_timezone_abbreviation(self, timezone_name: str) -> str:
+        """Get timezone abbreviation"""
+        timezone_abbreviations = {
+            "Europe/Moscow": "MSK",
+            "Asia/Yekaterinburg": "YEKT",
+            "Asia/Novosibirsk": "NOVT",
+            "Asia/Krasnoyarsk": "KRAT",
+            "Asia/Irkutsk": "IRKT",
+            "Asia/Vladivostok": "VLAT",
+            "Europe/Samara": "SAMT",
+            "Asia/Omsk": "OMST",
+            "America/New_York": "EST",
+            "Europe/London": "GMT",
+            "Europe/Paris": "CET",
+            "Europe/Berlin": "CET",
+            "Asia/Tokyo": "JST",
+            "Asia/Shanghai": "CST",
+            "Australia/Sydney": "AEDT"
+        }
+        
+        return timezone_abbreviations.get(timezone_name, "MSK")
     
     def get_user_local_time(self, user_timezone: str) -> datetime:
         """Get current time in user's timezone"""

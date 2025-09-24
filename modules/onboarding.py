@@ -4,7 +4,6 @@ Handles the initial user onboarding process to inform clients about the bot's pu
 """
 
 import logging
-import requests
 import json
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
@@ -426,77 +425,37 @@ class OnboardingModule:
             await self._handle_timezone_error(update, context, city_input)
     
     async def _get_timezone_from_city(self, city_name: str) -> Dict[str, Any]:
-        """Get timezone information for a city from internet"""
+        """Get timezone information for a city using timezone utility"""
         try:
-            # Use OpenWeatherMap Geocoding API to get coordinates
-            geocoding_url = "http://api.openweathermap.org/geo/1.0/direct"
-            geocoding_params = {
-                "q": city_name,
-                "limit": 1,
-                "appid": "your_openweather_api_key"  # You'll need to add this to your .env
-            }
+            # Import timezone utility
+            from modules.timezone_utils import TimezoneManager
             
-            # For demo purposes, we'll use a free timezone API
-            # In production, you should use a proper API key
-            timezone_url = f"http://worldtimeapi.org/api/timezone"
+            timezone_manager = TimezoneManager()
+            timezone_info = await timezone_manager.get_timezone_for_city(city_name)
             
-            # Get list of available timezones
-            response = requests.get(timezone_url, timeout=10)
-            if response.status_code == 200:
-                timezones = response.json()
-                
-                # Simple mapping for common cities (fallback)
-                city_timezone_mapping = {
-                    "москва": "Europe/Moscow",
-                    "санкт-петербург": "Europe/Moscow",
-                    "питер": "Europe/Moscow",
-                    "екатеринбург": "Asia/Yekaterinburg",
-                    "новосибирск": "Asia/Novosibirsk",
-                    "красноярск": "Asia/Krasnoyarsk",
-                    "иркутск": "Asia/Irkutsk",
-                    "владивосток": "Asia/Vladivostok",
-                    "хабаровск": "Asia/Vladivostok",
-                    "самара": "Europe/Samara",
-                    "казань": "Europe/Moscow",
-                    "нижний новгород": "Europe/Moscow",
-                    "челябинск": "Asia/Yekaterinburg",
-                    "омск": "Asia/Omsk",
-                    "ростов-на-дону": "Europe/Moscow",
-                    "уфа": "Asia/Yekaterinburg",
-                    "волгоград": "Europe/Moscow",
-                    "пермь": "Asia/Yekaterinburg",
-                    "краснодар": "Europe/Moscow",
-                    "саратов": "Europe/Moscow"
+            if timezone_info:
+                logger.info(f"Successfully got timezone info for {city_name}: {timezone_info['timezone']}")
+                return timezone_info
+            else:
+                logger.warning(f"Could not get timezone info for {city_name}, using default")
+                return {
+                    "timezone": "Europe/Moscow",
+                    "offset": "+03:00",
+                    "name": "Московское время",
+                    "city": city_name,
+                    "abbreviation": "MSK"
                 }
-                
-                city_lower = city_name.lower().strip()
-                timezone_name = city_timezone_mapping.get(city_lower, "Europe/Moscow")
-                
-                # Get timezone details
-                timezone_details_url = f"http://worldtimeapi.org/api/timezone/{timezone_name}"
-                timezone_response = requests.get(timezone_details_url, timeout=10)
-                
-                if timezone_response.status_code == 200:
-                    timezone_data = timezone_response.json()
-                    
-                    return {
-                        "timezone": timezone_name,
-                        "offset": timezone_data.get("utc_offset", "+03:00"),
-                        "name": timezone_data.get("timezone", timezone_name),
-                        "city": city_name
-                    }
             
+        except Exception as e:
+            logger.error(f"Error getting timezone for city {city_name}: {e}")
             # Fallback to default
             return {
                 "timezone": "Europe/Moscow",
                 "offset": "+03:00",
                 "name": "Московское время",
-                "city": city_name
+                "city": city_name,
+                "abbreviation": "MSK"
             }
-            
-        except Exception as e:
-            logger.error(f"Error fetching timezone data: {e}")
-            return None
     
     async def _handle_city_not_found(self, update: Update, context: ContextTypes.DEFAULT_TYPE, city_input: str):
         """Handle case when city is not found"""

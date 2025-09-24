@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="28" failures="23" skipped="0" tests="59" time="1.899" timestamp="2025-09-24T04:48:36.690795" hostname="iMac-Dmitry.local"><testcase classname="tests.test_admin_notifications.TestAdminNotifications" name="test_new_user_notification" time="0.001"><error message="failed on setup with &quot;TypeError: __init__() takes 1 positional argument but 3 were given&quot;">tests/test_admin_notifications.py:15: in admin_notifications
+    return AdminNotificationService("test_admin_token", "41107472")
+E   TypeError: __init__() takes 1 positional argument but 3 were given</error></testcase><testcase classname="tests.test_admin_notifications.TestAdminNotifications" name="test_new_subscription_notification" time="0.000"><error message="failed on setup with &quot;TypeError: __init__() takes 1 positional argument but 3 were given&quot;">tests/test_admin_notifications.py:15: in admin_notifications
+    return AdminNotificationService("test_admin_token", "41107472")
+E   TypeError: __init__() takes 1 positional argument but 3 were given</error></testcase><testcase classname="tests.test_admin_notifications.TestAdminNotifications" name="test_payment_notification" time="0.000"><error message="failed on setup with &quot;TypeError: __init__() takes 1 positional argument but 3 were given&quot;">tests/test_admin_notifications.py:15: in admin_notifications
+    return AdminNotificationService("test_admin_token", "41107472")
+E   TypeError: __init__() takes 1 positional argument but 3 were given</error></testcase><testcase classname="tests.test_admin_notifications.TestAdminNotifications" name="test_help_request_notification" time="0.000"><error message="failed on setup with &quot;TypeError: __init__() takes 1 positional argument but 3 were given&quot;">tests/test_admin_notifications.py:15: in admin_notifications
+    return AdminNotificationService("test_admin_token", "41107472")
+E   TypeError: __init__() takes 1 positional argument but 3 were given</error></testcase><testcase classname="tests.test_admin_notifications.TestAdminNotifications" name="test_notification_error_handling" time="0.000"><error message="failed on setup with &quot;TypeError: __init__() takes 1 positional argument but 3 were given&quot;">tests/test_admin_notifications.py:15: in admin_notifications
+    return AdminNotificationService("test_admin_token", "41107472")
+E   TypeError: __init__() takes 1 positional argument but 3 were given</error></testcase><testcase classname="tests.test_admin_notifications.TestAdminNotifications" name="test_notification_with_missing_user_data" time="0.000"><error message="failed on setup with &quot;TypeError: __init__() takes 1 positional argument but 3 were given&quot;">tests/test_admin_notifications.py:15: in admin_notifications
+    return AdminNotificationService("test_admin_token", "41107472")
+E   TypeError: __init__() takes 1 positional argument but 3 were given</error></testcase><testcase classname="tests.test_admin_notifications.TestAdminNotifications" name="test_notification_formatting" time="0.000"><error message="failed on setup with &quot;TypeError: __init__() takes 1 positional argument but 3 were given&quot;">tests/test_admin_notifications.py:15: in admin_notifications
+    return AdminNotificationService("test_admin_token", "41107472")
+E   TypeError: __init__() takes 1 positional argument but 3 were given</error></testcase><testcase classname="tests.test_admin_notifications.TestAdminNotifications" name="test_multiple_notifications" time="0.000"><error message="failed on setup with &quot;TypeError: __init__() takes 1 positional argument but 3 were given&quot;">tests/test_admin_notifications.py:15: in admin_notifications
+    return AdminNotificationService("test_admin_token", "41107472")
+E   TypeError: __init__() takes 1 positional argument but 3 were given</error></testcase><testcase classname="tests.test_admin_notifications.TestAdminNotifications" name="test_notification_with_special_characters" time="0.000"><error message="failed on setup with &quot;TypeError: __init__() takes 1 positional argument but 3 were given&quot;">tests/test_admin_notifications.py:15: in admin_notifications
+    return AdminNotificationService("test_admin_token", "41107472")
+E   TypeError: __init__() takes 1 positional argument but 3 were given</error></testcase><testcase classname="tests.test_bug_demonstration.TestBugDemonstration" name="test_bug_demonstration" time="0.010" /><testcase classname="tests.test_bug_demonstration.TestBugDemonstration" name="test_fix_demonstration" time="0.006"><failure message="AssertionError: Expected onboarding, got None&#10;assert None == 'onboarding'&#10; +  where 'onboarding' = &lt;UserState.ONBOARDING: 'onboarding'&gt;.value">tests/test_bug_demonstration.py:84: in test_fix_demonstration
+    assert retrieved_state == test_state.value, f"Expected {test_state.value}, got {retrieved_state}"
+E   AssertionError: Expected onboarding, got None
+E   assert None == 'onboarding'
+E    +  where 'onboarding' = &lt;UserState.ONBOARDING: 'onboarding'&gt;.value</failure></testcase><testcase classname="tests.test_bug_demonstration.TestBugDemonstration" name="test_onboarding_flow_bug_demonstration" time="0.006" /><testcase classname="tests.test_bug_demonstration.TestBugDemonstration" name="test_fixed_onboarding_flow" time="0.005"><failure message="AssertionError: Expected 'onboarding', got None&#10;assert None == 'onboarding'">tests/test_bug_demonstration.py:160: in test_fixed_onboarding_flow
+    assert retrieved_state == "onboarding", f"Expected 'onboarding', got {retrieved_state}"
+E   AssertionError: Expected 'onboarding', got None
+E   assert None == 'onboarding'</failure></testcase><testcase classname="tests.test_bug_summary.TestBugSummary" name="test_bug_summary" time="0.006" /><testcase classname="tests.test_bug_summary.TestBugSummary" name="test_automated_testing_benefits" time="0.000" /><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_database_initialization" time="0.004"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:16: in test_database_initialization
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_user_initialization" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:25: in test_user_initialization
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_user_state_management" time="0.004"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:46: in test_user_state_management
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_user_state_updates" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:67: in test_user_state_updates
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_message_storage" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:88: in test_message_storage
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_subscription_management" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:123: in test_subscription_management
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_focus_statements_management" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:146: in test_focus_statements_management
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_task_management" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:179: in test_task_management
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_active_task_management" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:218: in test_active_task_management
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_database_operations.TestDatabaseOperations" name="test_database_concurrent_access" time="0.004"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_database_operations.py:255: in test_database_concurrent_access
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_start_command_routes_to_onboarding" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_message_routing_by_state" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_callback_query_routing_by_state" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:85: in mock_update_callback
+    update.message = None
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_unknown_state_routes_to_onboarding" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_none_state_routes_to_onboarding" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_message_routing_with_security_checks" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_callback_query_routing_with_security_checks" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:85: in mock_update_callback
+    update.message = None
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_rate_limit_blocking" time="0.001"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_invalid_input_handling" time="0.001"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_message_routing.TestMessageRouting" name="test_error_handling_in_routing" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_onboarding_flow.TestOnboardingFlow" name="test_start_onboarding_sets_correct_state" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_onboarding_flow.TestOnboardingFlow" name="test_welcome_message_sends_correct_content" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_onboarding_flow.TestOnboardingFlow" name="test_continue_onboarding_button_advances_step" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:85: in mock_update_callback
+    update.message = None
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_onboarding_flow.TestOnboardingFlow" name="test_disclaimer_acceptance_advances_flow" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:85: in mock_update_callback
+    update.message = None
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_onboarding_flow.TestOnboardingFlow" name="test_age_collection_handles_valid_input" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_onboarding_flow.TestOnboardingFlow" name="test_age_collection_handles_invalid_input" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_onboarding_flow.TestOnboardingFlow" name="test_city_collection_stores_city" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_onboarding_flow.TestOnboardingFlow" name="test_onboarding_completion_sets_final_state" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:77: in mock_update
+    update.message = mock_message
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_onboarding_flow.TestOnboardingFlow" name="test_button_interaction_consistency" time="0.000"><error message="failed on setup with &quot;AttributeError: Attribute `message` of class `Update` can't be set!&quot;">conftest.py:85: in mock_update_callback
+    update.message = None
+../TelegramBot/venv/lib/python3.9/site-packages/telegram/_telegramobject.py:172: in __setattr__
+    raise AttributeError(
+E   AttributeError: Attribute `message` of class `Update` can't be set!</error></testcase><testcase classname="tests.test_simple" name="test_basic_functionality" time="0.000" /><testcase classname="tests.test_simple" name="test_async_functionality" time="0.011" /><testcase classname="tests.test_simple.TestBasicClass" name="test_class_method" time="0.000" /><testcase classname="tests.test_state_bug.TestStateManagementBug" name="test_state_consistency_bug_reproduction" time="0.006"><failure message="AttributeError: 'UserStateManager' object has no attribute 'get_user_state_data'">tests/test_state_bug.py:39: in test_state_consistency_bug_reproduction
+    retrieved_data = await state_manager.get_user_state_data(12345)
+E   AttributeError: 'UserStateManager' object has no attribute 'get_user_state_data'</failure></testcase><testcase classname="tests.test_state_bug.TestStateManagementBug" name="test_state_consistency_fixed_approach" time="0.005"><failure message="AttributeError: 'UserStateManager' object has no attribute 'get_user_state_data'">tests/test_state_bug.py:74: in test_state_consistency_fixed_approach
+    retrieved_data = await state_manager.get_user_state_data(12345)
+E   AttributeError: 'UserStateManager' object has no attribute 'get_user_state_data'</failure></testcase><testcase classname="tests.test_state_bug.TestStateManagementBug" name="test_onboarding_state_flow" time="0.005"><failure message="AttributeError: 'UserStateManager' object has no attribute 'get_user_state_data'">tests/test_state_bug.py:116: in test_onboarding_state_flow
+    data = await state_manager.get_user_state_data(12345)
+E   AttributeError: 'UserStateManager' object has no attribute 'get_user_state_data'</failure></testcase><testcase classname="tests.test_state_bug_simple.TestStateManagementBugSimple" name="test_state_consistency_bug_demonstration" time="0.005"><failure message="AssertionError: Expected onboarding, got None&#10;assert None == 'onboarding'">tests/test_state_bug_simple.py:41: in test_state_consistency_bug_demonstration
+    assert retrieved_state == test_state, f"Expected {test_state}, got {retrieved_state}"
+E   AssertionError: Expected onboarding, got None
+E   assert None == 'onboarding'</failure></testcase><testcase classname="tests.test_state_bug_simple.TestStateManagementBugSimple" name="test_state_consistency_fixed_approach" time="0.005"><failure message="AssertionError: Expected onboarding, got None&#10;assert None == 'onboarding'&#10; +  where 'onboarding' = &lt;UserState.ONBOARDING: 'onboarding'&gt;.value">tests/test_state_bug_simple.py:77: in test_state_consistency_fixed_approach
+    assert retrieved_state == test_state.value, f"Expected {test_state.value}, got {retrieved_state}"
+E   AssertionError: Expected onboarding, got None
+E   assert None == 'onboarding'
+E    +  where 'onboarding' = &lt;UserState.ONBOARDING: 'onboarding'&gt;.value</failure></testcase><testcase classname="tests.test_state_bug_simple.TestStateManagementBugSimple" name="test_onboarding_state_transitions" time="0.005"><failure message="AssertionError: Expected onboarding, got None&#10;assert None == 'onboarding'">tests/test_state_bug_simple.py:114: in test_onboarding_state_transitions
+    assert retrieved_state == state_string, f"Expected {state_string}, got {retrieved_state}"
+E   AssertionError: Expected onboarding, got None
+E   assert None == 'onboarding'</failure></testcase><testcase classname="tests.test_state_bug_simple.TestStateManagementBugSimple" name="test_state_validation" time="0.000" /><testcase classname="tests.test_state_management.TestStateManagementConsistency" name="test_state_manager_consistency" time="0.006"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_state_management.py:22: in test_state_manager_consistency
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_state_management.TestStateManagementConsistency" name="test_state_persistence_across_calls" time="0.004"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_state_management.py:51: in test_state_persistence_across_calls
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_state_management.TestStateManagementConsistency" name="test_state_manager_thread_safety" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_state_management.py:77: in test_state_manager_thread_safety
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_state_management.TestStateManagementConsistency" name="test_invalid_user_state_handling" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_state_management.py:103: in test_invalid_user_state_handling
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase><testcase classname="tests.test_state_management.TestStateManagementConsistency" name="test_state_transition_validation" time="0.005"><failure message="AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'">tests/test_state_management.py:118: in test_state_transition_validation
+    await db_manager.initialize_database()
+E   AttributeError: 'DatabaseManager' object has no attribute 'initialize_database'</failure></testcase></testsuite></testsuites>
