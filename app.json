@@ -1,7 +1,7 @@
 {
   "name": "HackReality Bot",
   "description": "Telegram bot for goal achievement and personal development",
-  "repository": "https://github.com/yourusername/hackreality-bot",
+  "repository": "https://github.com/DmitryPavl/hackreality-main-bot",
   "logo": "https://via.placeholder.com/300x300/4CAF50/FFFFFF?text=HackReality",
   "keywords": ["telegram", "bot", "python", "goal-achievement", "psychology"],
   "env": {

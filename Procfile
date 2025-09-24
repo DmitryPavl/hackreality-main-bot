@@ -1,1 +1,1 @@
-worker: python heroku_admin.py
+worker: python heroku_main.py
