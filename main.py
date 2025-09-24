@@ -284,8 +284,8 @@ Use `/start` to continue your journey or `/help` for assistance.
                 details={"message_length": len(sanitized_text), "module": "main_handler"}
             )
             
-                # Get user's current state
-                user_state = await self.db_manager.get_user_state(user_id)
+            # Get user's current state
+            user_state = await self.db_manager.get_user_state(user_id)
             logger.info(f"Message from user {user_id}: '{message_text}', state: {user_state}")
             
             # Route message to appropriate module based on state
