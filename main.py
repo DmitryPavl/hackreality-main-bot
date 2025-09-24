@@ -283,9 +283,11 @@ Use `/start` to continue your journey or `/help` for assistance.
             
             # Get user's current state
             user_state = await self.state_manager.get_user_state(user_id)
+            logger.info(f"Message from user {user_id}: '{message_text}', state: {user_state}")
             
             # Route message to appropriate module based on state
             if user_state == "onboarding":
+                logger.info(f"Routing message to onboarding module for user {user_id}")
                 await self.onboarding.handle_message(update, context)
             elif user_state == "option_selection":
                 await self.option.handle_message(update, context)
