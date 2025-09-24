@@ -232,7 +232,7 @@ class OnboardingModule:
 Это поможет мне адаптировать контент под твою возрастную группу! 🎯
             """
         
-        await update.message.reply_text(age_text, parse_mode='Markdown')
+        await self._send_message(update, context, age_text)
     
     async def _process_age_input(self, update: Update, context: ContextTypes.DEFAULT_TYPE, age_input: str):
         """Process age input from user"""
