@@ -127,7 +127,7 @@ class OnboardingModule:
         keyboard = [[InlineKeyboardButton("Да, расскажи больше! 🚀", callback_data="continue_onboarding")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        await update.message.reply_text(welcome_text, parse_mode='Markdown', reply_markup=reply_markup)
+        await self._send_message(update, context, welcome_text, reply_markup)
     
     async def _explain_purpose(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Explain the bot's main purpose"""

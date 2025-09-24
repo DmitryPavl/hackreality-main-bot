@@ -118,8 +118,8 @@ class TelegramBot:
                 state_context="initialization"
             )
             
-            # Route to onboarding module
-            await self.onboarding.handle_message(update, context)
+            # Start onboarding process
+            await self.onboarding.start_onboarding(update, context)
             
         except Exception as e:
             logger.error(f"Error in start_command for user {user_id}: {e}")
@@ -320,10 +320,14 @@ Use `/start` to continue your journey or `/help` for assistance.
             query = update.callback_query
             await query.answer()
             
+            logger.info(f"Callback query from user {user_id}: {query.data}")
+            
             # Route callback to appropriate module based on user state
             user_state = await self.state_manager.get_user_state(user_id)
+            logger.info(f"User {user_id} state: {user_state}")
             
             if user_state == "onboarding":
+                logger.info(f"Routing callback to onboarding module for user {user_id}")
                 await self.onboarding.handle_callback_query(update, context)
             elif user_state == "option_selection":
                 await self.option.handle_callback_query(update, context)
@@ -335,7 +339,8 @@ Use `/start` to continue your journey or `/help` for assistance.
                 await self.iteration.handle_callback_query(update, context)
             else:
                 # Default response for unknown state
-                await query.edit_message_text("Please use /start to begin your journey.")
+                logger.warning(f"Unknown user state '{user_state}' for user {user_id}, routing to onboarding")
+                await self.onboarding.handle_callback_query(update, context)
                 
         except Exception as e:
             logger.error(f"Error in handle_callback_query for user {user_id}: {e}")
