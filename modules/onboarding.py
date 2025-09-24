@@ -30,10 +30,16 @@ class OnboardingModule:
     
     async def _send_message(self, update, context, text, reply_markup=None, parse_mode='Markdown'):
         """Helper method to send messages in both message and callback query contexts"""
+        logger.info(f"_send_message called - update.message: {update.message is not None}, update.callback_query: {update.callback_query is not None}")
+        
         if update.message:
+            logger.info("Sending message via update.message.reply_text")
             await update.message.reply_text(text, parse_mode=parse_mode, reply_markup=reply_markup)
         else:
+            logger.info("Sending message via update.callback_query.edit_message_text")
             await update.callback_query.edit_message_text(text, parse_mode=parse_mode, reply_markup=reply_markup)
+        
+        logger.info("_send_message completed")
     
     async def start_onboarding(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Start the onboarding process"""
@@ -60,7 +66,9 @@ class OnboardingModule:
         await self.db_manager.set_user_state(user_id, "onboarding", state_data)
         
         # Start with welcome message
+        logger.info(f"Starting onboarding for user {user_id}, calling _welcome_message")
         await self._welcome_message(update, context)
+        logger.info(f"Welcome message call completed for user {user_id}")
     
     async def handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle messages during onboarding"""
@@ -96,8 +104,11 @@ class OnboardingModule:
     async def _welcome_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Send welcome message"""
         user_id = update.effective_user.id
+        logger.info(f"Sending welcome message to user {user_id}")
+        
         state_data = await self.db_manager.get_user_state_data(user_id)
         user_name = state_data.get("user_name", "")
+        logger.info(f"User name from state: '{user_name}'")
         
         if user_name:
             welcome_text = f"""
@@ -127,7 +138,9 @@ class OnboardingModule:
         keyboard = [[InlineKeyboardButton("Да, расскажи больше! 🚀", callback_data="continue_onboarding")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
+        logger.info(f"About to send welcome message to user {user_id}")
         await self._send_message(update, context, welcome_text, reply_markup)
+        logger.info(f"Welcome message sent to user {user_id}")
     
     async def _explain_purpose(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Explain the bot's main purpose"""
