@@ -177,7 +177,7 @@ Ready to start? Use `/start` to begin your journey! 🚀
             user_id = update.effective_user.id
             
             # Get user state
-            user_state = await self.state_manager.get_user_state(user_id)
+            user_state = await self.db_manager.get_user_state(user_id)
             
             # Get user profile
             user_profile = await self.db_manager.get_user_profile(user_id)
@@ -284,8 +284,8 @@ Use `/start` to continue your journey or `/help` for assistance.
                 details={"message_length": len(sanitized_text), "module": "main_handler"}
             )
             
-            # Get user's current state
-            user_state = await self.state_manager.get_user_state(user_id)
+                # Get user's current state
+                user_state = await self.db_manager.get_user_state(user_id)
             logger.info(f"Message from user {user_id}: '{message_text}', state: {user_state}")
             
             # Route message to appropriate module based on state
@@ -328,7 +328,7 @@ Use `/start` to continue your journey or `/help` for assistance.
             logger.info(f"Callback query from user {user_id}: {query.data}")
             
             # Route callback to appropriate module based on user state
-            user_state = await self.state_manager.get_user_state(user_id)
+            user_state = await self.db_manager.get_user_state(user_id)
             logger.info(f"User {user_id} state: {user_state}")
             
             if user_state == "onboarding":
