@@ -92,6 +92,7 @@ class TelegramBot:
             user_info = update.effective_user
             
             logger.info(f"User {user_id} ({user_info.first_name}) started the bot")
+            logger.info(f"About to call start_onboarding for user {user_id}")
             
             # Initialize user in database
             await self.db_manager.initialize_user(
@@ -119,7 +120,9 @@ class TelegramBot:
             )
             
             # Start onboarding process
+            logger.info(f"Calling start_onboarding for user {user_id}")
             await self.onboarding.start_onboarding(update, context)
+            logger.info(f"start_onboarding completed for user {user_id}")
             
         except Exception as e:
             logger.error(f"Error in start_command for user {user_id}: {e}")
