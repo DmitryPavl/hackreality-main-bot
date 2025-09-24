@@ -63,7 +63,12 @@ class OnboardingModule:
         }
         
         # Set user state to onboarding
+        logger.info(f"Setting user {user_id} state to 'onboarding' with data: {state_data}")
         await self.db_manager.set_user_state(user_id, "onboarding", state_data)
+        
+        # Verify state was set
+        verify_state = await self.db_manager.get_user_state(user_id)
+        logger.info(f"Verified user {user_id} state after setting: {verify_state}")
         
         # Start with welcome message
         logger.info(f"Starting onboarding for user {user_id}, calling _welcome_message")
@@ -983,8 +988,10 @@ Ready to see what plan works best for you? 🎯
         if query.data == "continue_onboarding":
             # Advance to next step
             user_id = update.effective_user.id
+            logger.info(f"continue_onboarding callback for user {user_id}")
             state_data = await self.db_manager.get_user_state_data(user_id)
             current_step = state_data.get("onboarding_step", 0)
+            logger.info(f"User {user_id} current_step: {current_step}, state_data: {state_data}")
             
             # Update to next step
             await self.db_manager.update_user_state_data(user_id, {"onboarding_step": current_step + 1})
